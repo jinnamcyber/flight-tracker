@@ -95,7 +95,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-3xl mx-auto px-4 pt-24 pb-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-12 sm:pt-24 pb-16">
         {/* Logo & Title - Google/Perplexity style centered */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 mb-6">
@@ -108,40 +108,36 @@ export default function Home() {
 
         {/* Search Box - Clean, Google-style */}
         <form onSubmit={handleSubmit} className="mb-8">
-          {/* Search Row */}
-          <div className="flex gap-3">
-
-            {/* Search Input */}
-            <div className="relative flex-1 flex items-center bg-white border border-gray-200 rounded-full shadow-sm hover:shadow-md focus-within:shadow-md transition-shadow duration-200">
-              <svg className="absolute left-5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search by flight number, airline, or airport..."
-                className="w-full py-4 pl-14 pr-32 text-gray-700 placeholder-gray-400 bg-transparent rounded-full focus:outline-none text-base"
-              />
-              <button
-                type="submit"
-                disabled={loading}
-                className="absolute right-2 px-6 py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-full transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? (
-                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                ) : (
-                  'Search'
-                )}
-              </button>
-            </div>
+          {/* Search Input */}
+          <div className="relative flex items-center bg-white border border-gray-200 rounded-full shadow-sm hover:shadow-md focus-within:shadow-md transition-shadow duration-200">
+            <svg className="absolute left-4 sm:left-5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Flight, airline, or airport..."
+              className="w-full py-3 sm:py-4 pl-12 sm:pl-14 pr-20 sm:pr-28 text-gray-700 placeholder-gray-400 bg-transparent rounded-full focus:outline-none text-base"
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="absolute right-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-full transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+              ) : (
+                'Search'
+              )}
+            </button>
           </div>
 
           {/* Quick suggestions */}
-          <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-4 text-sm text-gray-500">
             <span>Try:</span>
             <button type="button" onClick={() => { setQuery('AA100'); searchFlights('AA100'); }} className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
               AA100
@@ -226,10 +222,10 @@ export default function Home() {
                   </div>
 
                   {/* Route Info */}
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     {/* Departure */}
                     <div className="flex-1">
-                      <p className="text-2xl font-semibold text-gray-900">{flight.departure.airport}</p>
+                      <p className="text-xl sm:text-2xl font-semibold text-gray-900">{flight.departure.airport}</p>
                       <p className="text-sm text-gray-500">{flight.departure.city}</p>
                       <div className="mt-2">
                         <p className="text-base font-medium text-gray-800">{formatTime(flight.departure.time)}</p>
@@ -237,20 +233,29 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Flight Path Indicator */}
-                    <div className="flex-shrink-0 flex items-center gap-2 px-4">
+                    {/* Flight Path Indicator - Hidden on mobile, visible on sm+ */}
+                    <div className="hidden sm:flex flex-shrink-0 items-center gap-2 px-4">
                       <div className="w-2 h-2 rounded-full bg-gray-300" />
-                      <div className="w-16 h-px bg-gray-300" />
+                      <div className="w-12 lg:w-16 h-px bg-gray-300" />
                       <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                       </svg>
-                      <div className="w-16 h-px bg-gray-300" />
+                      <div className="w-12 lg:w-16 h-px bg-gray-300" />
                       <div className="w-2 h-2 rounded-full bg-gray-300" />
                     </div>
 
+                    {/* Mobile arrow divider */}
+                    <div className="flex sm:hidden items-center gap-2 text-gray-400">
+                      <div className="flex-1 h-px bg-gray-200" />
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                      </svg>
+                      <div className="flex-1 h-px bg-gray-200" />
+                    </div>
+
                     {/* Arrival */}
-                    <div className="flex-1 text-right">
-                      <p className="text-2xl font-semibold text-gray-900">{flight.arrival.airport}</p>
+                    <div className="flex-1 sm:text-right">
+                      <p className="text-xl sm:text-2xl font-semibold text-gray-900">{flight.arrival.airport}</p>
                       <p className="text-sm text-gray-500">{flight.arrival.city}</p>
                       <div className="mt-2">
                         <p className="text-base font-medium text-gray-800">{formatTime(flight.arrival.time)}</p>
